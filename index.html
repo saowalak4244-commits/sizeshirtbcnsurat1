@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>สำรวจไซส์เสื้อ นศ.พยาบาล</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14283A;--mut:#5B6B7A;--line:#E1E8ED;--bg:#F2F6F8;--brand:#0C8B87;--soft:#DDF3F1;--warn:#D9573C;--wsoft:#FDECE7;font-family:Anuphan,"Noto Sans Thai",system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button,input{font:inherit;color:inherit}button{cursor:pointer}:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+header{background:var(--ink);color:#fff;padding:18px 20px 0}
+.wrap{max-width:1040px;margin:0 auto}
+h1{margin:0;font-size:22px;font-weight:700}header p{margin:4px 0 14px;color:#A9BCCB;font-size:14px}
+.tabs{display:flex;gap:4px}.tabs button{background:none;border:0;color:#A9BCCB;padding:10px 18px;border-radius:12px 12px 0 0;font-weight:600}
+.tabs button[aria-selected=true]{background:var(--bg);color:var(--ink)}
+main{padding:20px}.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--brand);transition:width .4s}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.tools input{flex:1 1 220px;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;font-size:16px}
+.chips{display:flex;gap:6px}.chips button,.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;font-weight:500}
+.chips button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+.card{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.card:hover{border-color:var(--brand)}.card.done{background:#F7FCFB}
+.av{flex:none;width:44px;height:44px;border-radius:14px;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:18px}
+.who{flex:1;min-width:0;display:flex;flex-direction:column}.who b{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.who small{color:var(--mut);font-size:13px}
+.pill{flex:none;min-width:44px;text-align:center;padding:6px 10px;border-radius:10px;font-weight:700;font-size:14px}
+.todo{flex:none;color:var(--warn);background:var(--wsoft);padding:6px 10px;border-radius:10px;font-size:13px;font-weight:600}
+dialog{border:0;border-radius:24px;padding:24px;width:min(460px,calc(100% - 24px));margin:auto auto 12px}dialog::backdrop{background:#14283A99}
+dialog h2{margin:0;font-size:20px}dialog p{margin:2px 0 18px;color:var(--mut)}
+.sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sizes button{padding:18px 0;border-radius:14px;border:2px solid var(--line);background:#fff;font-size:20px;font-weight:700}
+.sizes button[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.acts{display:flex;gap:8px;margin-top:18px}.acts .go{flex:1;background:var(--ink);color:#fff;border:0;border-radius:14px;padding:15px;font-weight:700;font-size:16px}.go:disabled{opacity:.35}
+.dash{display:grid;grid-template-columns:260px 1fr;gap:14px}@media(max-width:760px){.dash{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px}.panel h3{margin:0 0 14px;font-size:16px}
+.ring{display:grid;place-items:center;position:relative}.ring b{position:absolute;font-size:34px}.ring span{position:absolute;margin-top:46px;color:var(--mut);font-size:13px}
+.row{display:grid;grid-template-columns:44px 1fr 70px;align-items:center;gap:10px;margin:8px 0;font-size:14px}.row .bar{height:14px}.row em{font-style:normal;text-align:right;color:var(--mut)}
+.tbl{margin-top:14px;overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--mut);font-weight:500}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;opacity:0;pointer-events:none;transition:opacity .25s}#toast.on{opacity:1}#toast.err{background:var(--warn)}
+.msg{padding:40px;text-align:center;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>สำรวจไซส์เสื้อ</h1><p>นักศึกษาพยาบาล ปริญญาตรี สาขาอื่น 2.5 ปี</p>
+<div class="tabs" role="tablist"><button role="tab" id="t1" aria-selected="true">เลือกไซส์</button><button role="tab" id="t2" aria-selected="false">แดชบอร์ด</button></div>
+</div></header>
+<main class="wrap">
+<section id="v1">
+<div class="bar"><i id="p1"></i></div>
+<div class="tools"><input id="q" type="search" placeholder="พิมพ์ชื่อ ชื่อเล่น หรือลำดับ" aria-label="ค้นหา">
+<div class="chips" id="chips"><button data-f="all" aria-pressed="true">ทั้งหมด</button><button data-f="todo" aria-pressed="false">ยังไม่เลือก</button><button data-f="done" aria-pressed="false">เลือกแล้ว</button></div></div>
+<div class="grid" id="grid"></div>
+</section>
+<section id="v2" hidden>
+<div class="dash">
+<div class="panel"><h3>ความคืบหน้า</h3><div class="ring"><svg width="170" height="170" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="#E1E8ED" stroke-width="12"/><circle id="arc" cx="60" cy="60" r="50" fill="none" stroke="#0C8B87" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 314" transform="rotate(-90 60 60)"/></svg><b id="pct">0%</b><span id="cnt"></span></div></div>
+<div class="panel"><h3>จำนวนแยกตามไซส์</h3><div id="dist"></div></div>
+</div>
+<div class="panel tbl-p" style="margin-top:14px"><div class="tools" style="margin-top:0"><h3 style="margin:0;flex:1;align-self:center">สรุปรายบุคคล</h3><button class="btn" id="re">รีเฟรช</button><button class="btn" id="csv">ดาวน์โหลด CSV</button></div>
+<div class="tbl"><table><thead><tr><th>ลำดับ</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ไซส์</th></tr></thead><tbody id="tb"></tbody></table></div></div>
+</section>
+</main>
+<dialog id="sh"><h2 id="shn"></h2><p id="shs"></p><div class="sizes" id="szs"></div>
+<div class="acts"><button class="btn" id="cx">ยกเลิก</button><button class="go" id="ok" disabled>บันทึกไซส์</button></div></dialog>
+<div id="toast" role="status"></div>
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbx0NuAI9oRV2B0KIaFPJeR6RjugICQ079pmSrDoNeQA3ZLKn6BwunXCVMJhO8w6K6P3nA/exec';
+const SIZES=['XS','S','M','L','XL','2XL','3XL','4XL']; // ต้องตรงกับ SIZES ใน Code.gs
+const DEMO_DATA=[{"id": 1, "name": "นางสาวธันรดา  บัวชาวเกาะ", "nick": "แป้ง", "size": ""}, {"id": 2, "name": "นายพัชรพล วงศ์เทพบุตร", "nick": "เจมส์", "size": ""}, {"id": 3, "name": "นางสาวภัณฑิลา สุวรรณอักษร", "nick": "แคท", "size": ""}, {"id": 4, "name": "นางสาวพิมพ์นภัส ทุมมา", "nick": "กิ๊ฟ", "size": ""}, {"id": 5, "name": "นางสาวเสาวลักษณ์  ศรลอย", "nick": "จ๋า", "size": ""}, {"id": 6, "name": "นางสาวณัฐรัตน์ อินทวิสัย", "nick": "มด", "size": ""}, {"id": 7, "name": "นางสาวสิริมา โพธิ์ทักษิณ", "nick": "เบส", "size": ""}, {"id": 8, "name": "นายกิตติศักดิ์ ยังโซ๊ะ", "nick": "กิต", "size": ""}, {"id": 9, "name": "นายบูรพา โมกภา", "nick": "โกโก้", "size": ""}, {"id": 10, "name": "นายจิตเกษม  อินทร์เนื่อง", "nick": "ต้น", "size": ""}, {"id": 11, "name": "นางสาวชนัญชิดา ณ อยุธยา", "nick": "กวาง", "size": ""}, {"id": 12, "name": "นางสาวชนัญชิตา ยุทธพรพงศ์", "nick": "ตอง", "size": ""}, {"id": 13, "name": "นางสาวฑุลิกา หนูเสือ", "nick": "กาก้า", "size": ""}, {"id": 14, "name": "นางสาวดวงกมล ลิ้มสกุล", "nick": "นิ้ง", "size": ""}, {"id": 15, "name": "นางสาวประภัสสรันย์ ยิกุสังข์", "nick": "ใบเฟิร์น", "size": ""}, {"id": 16, "name": "นางสาวปารีณา รัตนวาร", "nick": "ไข่มุก", "size": ""}, {"id": 17, "name": "นางสาวพรเกษร เผ่าจำรูญ", "nick": "พี่งึก", "size": ""}, {"id": 18, "name": "นางสาวฤทัยรัตน์ พูลเปี่ยม", "nick": "อ๊อฟ", "size": ""}, {"id": 19, "name": "นายวรวรรธน์ วิชัยดิษฐ", "nick": "อิฐ", "size": ""}, {"id": 20, "name": "นางสาวศิรประภา แซ่ตัน", "nick": "เอมี่", "size": ""}, {"id": 21, "name": "ปาริฉัตร หีตเอี้ยว", "nick": "เอ๋", "size": ""}, {"id": 22, "name": "ปิยะธิดา ลูกเด็น", "nick": "เดย์", "size": ""}, {"id": 23, "name": "ปิยาพัชร ภูมิไชยา", "nick": "ลูกด้าย", "size": ""}, {"id": 24, "name": "นายฟาอีส สาลี", "nick": "อีส", "size": ""}, {"id": 25, "name": "รัชธารา ชนะวรรณ", "nick": "ฟิล์ม", "size": ""}, {"id": 26, "name": "ศรุตา ศุภรัชดาพันธุ์", "nick": "ซีน", "size": ""}, {"id": 27, "name": "สรสิชา อินทชาติ", "nick": "อุ้ม", "size": ""}, {"id": 28, "name": "อนงทิพย์ สงขำ", "nick": "ไข่มุก", "size": ""}, {"id": 29, "name": "อรวรา พลละคร", "nick": "อร", "size": ""}, {"id": 30, "name": "อัคพงษ์ ปล้องชู", "nick": "เอ็ม", "size": ""}, {"id": 31, "name": "ปาริชาติ ปราชญ์นคร", "nick": "ปูเป้", "size": ""}, {"id": 32, "name": "ภูมิภูมินทร์ ธนภคินธยาน์", "nick": "อิฐ", "size": ""}, {"id": 33, "name": "ยูรีดา เนื้ออ่อน", "nick": "ยูรี", "size": ""}, {"id": 34, "name": "รัญชนา นาเลื่อน", "nick": "พลอย", "size": ""}, {"id": 35, "name": "สุนันทา อินทสระ", "nick": "ติ๋ม", "size": ""}, {"id": 36, "name": "สุนิสา อาดาม", "nick": "สา", "size": ""}, {"id": 37, "name": "หทัยชนก รักณรงค์", "nick": "ออฟ", "size": ""}, {"id": 38, "name": "อณิฐา มานะ", "nick": "ฐา", "size": ""}, {"id": 39, "name": "อโนชา สังวริ", "nick": "ออย", "size": ""}, {"id": 40, "name": "ฮัยฟัฒน์ มามะ", "nick": "ฟา", "size": ""}, {"id": 41, "name": "นางสาวธันรดา  บัวชาวเกาะ", "nick": "แป้ง", "size": ""}, {"id": 42, "name": "นายพัชรพล วงศ์เทพบุตร", "nick": "เจมส์", "size": ""}, {"id": 43, "name": "นางสาวภัณฑิลา สุวรรณอักษร", "nick": "แคท", "size": ""}, {"id": 44, "name": "นางสาวพิมพ์นภัส ทุมมา", "nick": "กิ๊ฟ", "size": ""}, {"id": 45, "name": "นางสาวเสาวลักษณ์  ศรลอย", "nick": "จ๋า", "size": ""}, {"id": 46, "name": "นางสาวณัฐรัตน์ อินทวิสัย", "nick": "มด", "size": ""}, {"id": 47, "name": "นางสาวสิริมา โพธิ์ทักษิณ", "nick": "เบส", "size": ""}, {"id": 48, "name": "นายกิตติศักดิ์ ยังโซ๊ะ", "nick": "กิต", "size": ""}, {"id": 49, "name": "นายบูรพา โมกภา", "nick": "โกโก้", "size": ""}, {"id": 50, "name": "นายจิตเกษม  อินทร์เนื่อง", "nick": "ต้น", "size": ""}, {"id": 51, "name": "ยุวธิดา ชูสินธ์", "nick": "นิ้นุ่น", "size": ""}];
+const DEMO=new URLSearchParams(location.search).has('demo');
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let rows=[],flt='all',pick='',cur=null;
+const sz=s=>{const i=SIZES.indexOf(s),l=92-i*(54/(SIZES.length-1));return `background:hsl(176 55% ${l}%);color:${l<60?'#fff':'#0B4F4C'}`};
+const toast=(m,e)=>{const t=$('#toast');t.textContent=m;t.className='on'+(e?' err':'');clearTimeout(t.h);t.h=setTimeout(()=>t.className='',2600)};
+async function call(body){
+ if(DEMO){await new Promise(r=>setTimeout(r,250));if(body){const r=DEMO_DATA.find(x=>x.id==body.id);r.size=body.size;}return{ok:true,rows:DEMO_DATA.map(r=>({...r}))}}
+ const r=await fetch(body?API_URL:API_URL+'?t='+Date.now(),body?{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}:{});
+ const j=await r.json();if(!j.ok)throw new Error(j.error||'เกิดข้อผิดพลาด');return j}
+async function load(){try{rows=(await call()).rows;draw()}catch(e){$('#grid').innerHTML='<div class="msg">โหลดข้อมูลไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วกดรีเฟรช</div>';toast(e.message,1)}}
+const ini=r=>(r.nick||r.name.replace(/^(นางสาว|นาย|นาง)\s*/,'')).charAt(0);
+function draw(){
+ const done=rows.filter(r=>r.size).length,n=rows.length,p=n?Math.round(done*100/n):0;
+ $('#p1').style.width=p+'%';
+ const q=$('#q').value.trim().toLowerCase();
+ const list=rows.filter(r=>(flt=='all'||(flt=='done')==!!r.size)&&(!q||(r.name+r.nick+r.id).toLowerCase().includes(q)));
+ $('#grid').innerHTML=list.map(r=>`<button class="card ${r.size?'done':''}" data-id="${esc(r.id)}"><span class="av">${esc(ini(r))}</span><span class="who"><b>${esc(r.name)}</b><small>ชื่อเล่น ${esc(r.nick||'-')}</small><small>ลำดับ ${esc(r.id)}</small></span>${r.size?`<span class="pill" style="${sz(r.size)}">${esc(r.size)}</span>`:'<span class="todo">เลือกไซส์</span>'}</button>`).join('')||'<div class="msg">ไม่พบรายชื่อที่ค้นหา</div>';
+ $('#pct').textContent=p+'%';$('#cnt').textContent=`${done} จาก ${n} คน`;$('#arc').setAttribute('stroke-dasharray',`${314*p/100} 314`);
+ $('#dist').innerHTML=SIZES.map(s=>{const c=rows.filter(r=>r.size==s).length;return `<div class="row"><span class="pill" style="${sz(s)}">${s}</span><div class="bar"><i style="width:${done?c*100/done:0}%;background:${sz(s).match(/hsl\([^)]+\)/)[0]}"></i></div><em>${c} คน</em></div>`}).join('')+`<div class="row"><span></span><span>ยังไม่เลือก</span><em style="color:var(--warn)">${n-done} คน</em></div>`;
+ $('#tb').innerHTML=rows.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.nick)}</td><td>${r.size?`<span class="pill" style="${sz(r.size)}">${esc(r.size)}</span>`:'<span class="todo">ยังไม่เลือก</span>'}</td></tr>`).join('')}
+$('#grid').onclick=e=>{const b=e.target.closest('.card');if(!b)return;cur=rows.find(r=>r.id==b.dataset.id);pick=cur.size;
+ $('#shn').textContent=cur.name;$('#shs').textContent='ลำดับ '+cur.id+(cur.nick?' ชื่อเล่น '+cur.nick:'');
+ $('#szs').innerHTML=SIZES.map(s=>`<button aria-pressed="${s==pick}">${s}</button>`).join('');$('#ok').disabled=!pick;$('#sh').showModal()};
+$('#szs').onclick=e=>{const b=e.target.closest('button');if(!b)return;pick=b.textContent;[...$('#szs').children].forEach(x=>x.setAttribute('aria-pressed',x==b));$('#ok').disabled=false};
+$('#cx').onclick=()=>$('#sh').close();
+$('#ok').onclick=async()=>{const old=cur.size;$('#ok').disabled=true;$('#ok').textContent='กำลังบันทึก…';
+ try{await call({action:'set',id:cur.id,size:pick});cur.size=pick;$('#sh').close();draw();toast('บันทึกไซส์ '+pick+' แล้ว')}
+ catch(e){cur.size=old;toast('บันทึกไม่สำเร็จ: '+e.message,1);$('#ok').disabled=false}
+ $('#ok').textContent='บันทึกไซส์'};
+$('#q').oninput=draw;
+$('#chips').onclick=e=>{const b=e.target.closest('button');if(!b)return;flt=b.dataset.f;[...$('#chips').children].forEach(x=>x.setAttribute('aria-pressed',x==b));draw()};
+function tab(n){$('#v1').hidden=n!=1;$('#v2').hidden=n!=2;$('#t1').setAttribute('aria-selected',n==1);$('#t2').setAttribute('aria-selected',n==2);if(n==2)load()}
+$('#t1').onclick=()=>tab(1);$('#t2').onclick=()=>tab(2);$('#re').onclick=load;
+$('#csv').onclick=()=>{const t=['ลำดับ,ชื่อ-นามสกุล,ชื่อเล่น,size เสื้อ',...rows.map(r=>[r.id,r.name,r.nick,r.size].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))].join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'}));a.download='size-shirt.csv';a.click()};
+setInterval(()=>{if(!$('#v2').hidden&&!$('#sh').open)load()},30000);
+load();
+</script>
+</body>
+</html>
